@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CitterCards</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #1c1c1e;
+            --accent-color: #ffdd2d;
+            --text-main: #ffffff;
+            --text-secondary: #8e8e93;
+            --crypto-color: #007aff;
+            --selection-color: #3a3a3c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            background: #000;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pages */
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: var(--selection-color);
+            color: var(--text-main);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card-option {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card-option.selected {
+            border-color: var(--crypto-color);
+            transform: scale(1.02);
+        }
+
+        .card-name {
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--crypto-color);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <div class="logo" style="font-weight: 800; font-size: 24px;">Citter</div>
+        <div class="profile-icon">??</div>
+    </header>
+
+    <div class="tabs-nav">
+        <button class="tab-button active" onclick="openTab(event, 'cards')">Cards</button>
+        <button class="tab-button" onclick="openTab(event, 'crypto')">Our websites</button>
+    </div>
+
+    <!-- Вкладка Карт -->
+    <div id="cards" class="tab-content active">
+        <div class="card-option" onclick="selectCard(this)">
+            <span class="card-name">Original CitterCard</span>
+            <span style="color: var(--text-secondary)">Cashback 2-5%</span>
+        </div>
+
+        <div class="card-option" onclick="selectCard(this)">
+            <div class="price-tag">$10,000</div>
+            <span class="card-name">ULTRA Premium CitterCard</span>
+            <span style="color: var(--text-secondary)">Cashback 6-9%</span>
+        </div>
+    </div>
+
+    <!-- About  -->
+    <div id="crypto" class="tab-content">
+        <div style="text-align: center; padding: 40px 20px; color: var(--text-secondary);">
+           CitterStore: https://capitanomibt.github.io/CitterStore/,
+           CitterBank: https://capitanomibt.github.io/CitterBank/
+           CitterCourse: https://capitanomibt.github.io/CitterCourse/
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabId) {
+        var i, tabContent, tabButtons;
+
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].classList.remove("active");
+        }
+
+        tabButtons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove("active");
+        }
+
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function selectCard(element) {
+        var options = document.getElementsByClassName("card-option");
+        for (var i = 0; i < options.length; i++) {
+            options[i].classList.remove("selected");
+        }
+        element.classList.add("selected");
+        
+        console.log("Selected Card: " + element.querySelector('.card-name').innerText);
+    }
+</script>
+
+</body>
+</html>
